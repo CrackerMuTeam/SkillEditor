@@ -1,0 +1,17 @@
+//Tabela Memb___id
+"MEMB_INFO"          //MEMB_INFO
+"memb___id"          //memb___id    
+
+//Tabela AccountCharacter
+"GameID1"            //GameID1
+"GameID2"            //GameID2  
+"GameID3"            //GameID3 
+"GameID4"            //GameID4 
+"GameID5"            //GameID5 
+"Id"                 //ID 
+"AccountCharacter"   //AccountCharacter 
+
+//Tabela Character
+"Character"          //Character 
+"MagicList"          //MagicList
+"Name"               //GameID2 
