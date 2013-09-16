@@ -61,7 +61,7 @@ Equips,NoEquips,PS,Info:string; //invsepar
 
 translate,otherfiles:string; // Credits
 
-configtype,programname,classe,tab,information,deletetext:string;
+configtype,programname,classe,tab:string;
 
 implementation
 

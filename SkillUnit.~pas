@@ -1,14 +1,14 @@
-unit Unit2;
+unit SkillUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, ADODB, StdCtrls,strUtils, ValEdit, ExtCtrls, Buttons,dec,
-  ComCtrls,unit3,inifiles,mmsystem, ToolWin, showdata, Menus;
+  ComCtrls,unit3,inifiles,mmsystem, ToolWin, showdata, Menus,configform;
 
 type
-  TForm2 = class(TForm)
+  TSkillForm = class(TForm)
     GroupBox1: TGroupBox;
     Panel2: TPanel;
     Button1: TButton;
@@ -48,6 +48,8 @@ type
     BitBtn5: TBitBtn;
     CheckBox2: TCheckBox;
     RichEdit1: TRichEdit;
+    BitBtn9: TBitBtn;
+    procedure BitBtn9Click(Sender: TObject);
     procedure iniciar;
 
     procedure ComboBox5Change(Sender: TObject);
@@ -80,6 +82,7 @@ type
     procedure skillrem;
     procedure editlock;
     procedure editunlock;
+    procedure resetsk;
   private
     { Private declarations }
   public
@@ -90,7 +93,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  SkillForm: TSkillForm;
   wscells:array[0..99] of tspeedbutton; //quadrados de Skill
   rodarskill:boolean;
   lugar:byte;
@@ -113,8 +116,8 @@ begin
       begin
             name1:=inttostr(i+1);
             if length(name1)=1 then name1:='0'+name1;
-            wscells[i]:=tspeedbutton.Create(form2);
-            wscells[i].parent:=form2.Panel2 ;
+            wscells[i]:=tspeedbutton.Create(SkillForm);
+            wscells[i].parent:=SkillForm.Panel2 ;
             wscells[i].left:=i*lcell+1;
             wscells[i].top:=0;
             wscells[i].height:=hcell;
@@ -122,8 +125,8 @@ begin
             wscells[i].Name:='';
             wscells[i].ShowHint:=true;
             wscells[i].Hint:=name1+'  ';
-            wscells[i].OnClick:=form2.cellClick;
-            wscells[i].onmousemove:=form2.cellMove;
+            wscells[i].OnClick:=SkillForm.cellClick;
+            wscells[i].onmousemove:=SkillForm.cellMove;
             //wscells[i,t].OnDblClick:=frmmain.cellDblClick;
           //  wscells[i,t].PopupMenu:=frmmain.popupmenu1;
       end;
@@ -136,13 +139,13 @@ begin
       wscells[i].Free ;
 end;
 
-procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TSkillForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   freesk;
   application.Terminate;
 end;
 
-procedure TForm2.accountmostrar;
+procedure TSkillForm.accountmostrar;
 var
 i:integer;
 begin
@@ -157,7 +160,7 @@ begin
   accquery.Close;
 end;
 
-procedure TForm2.Timer1Timer(Sender: TObject);
+procedure TSkillForm.Timer1Timer(Sender: TObject);
 var i:integer;
 begin
   if (rodarskill=true) and (wscells[0].left<0) then
@@ -173,33 +176,33 @@ begin
       end;
 end;
 
-procedure TForm2.Button2MouseDown(Sender: TObject; Button: TMouseButton;
+procedure TSkillForm.Button2MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   rodarskill:=true;
   timer1.enabled:=true;
 end;
 
-procedure TForm2.Button2MouseUp(Sender: TObject; Button: TMouseButton;
+procedure TSkillForm.Button2MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   timer1.Enabled:=false;
 end;
 
-procedure TForm2.Button1MouseDown(Sender: TObject; Button: TMouseButton;
+procedure TSkillForm.Button1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   rodarskill:=false;
   timer1.enabled:=true;
 end;
 
-procedure TForm2.Button1MouseUp(Sender: TObject; Button: TMouseButton;
+procedure TSkillForm.Button1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   timer1.enabled:=false;
 end;
 
-procedure Tform2.charactermostrar;
+procedure TSkillForm.charactermostrar;
 var i,j:byte;
 begin
   Combobox2.Items.Clear;
@@ -216,7 +219,7 @@ begin
 end;
 
 
-procedure TForm2.ComboBox2Change(Sender: TObject);
+procedure TSkillForm.ComboBox2Change(Sender: TObject);
 begin
 charactersave:=combobox2.Text;
 end;
@@ -226,16 +229,16 @@ var i,lblindex:integer;
 begin
   lblindex:=121;
   if s='all' then begin
-    for i:=0 to form2.Panel2.ControlCount-1 do begin
-      if lowercase(form2.Panel2.Controls[i].ClassName)='tpanel' then begin
+    for i:=0 to SkillForm.Panel2.ControlCount-1 do begin
+      if lowercase(SkillForm.Panel2.Controls[i].ClassName)='tpanel' then begin
          lblindex:=i;
          break;
       end;
     end;
     end
   else begin
-    for i:=0 to form2.Panel2.ControlCount-1 do begin
-      if uppercase(form2.Panel2.Controls[i].Name)=s then begin
+    for i:=0 to SkillForm.Panel2.ControlCount-1 do begin
+      if uppercase(SkillForm.Panel2.Controls[i].Name)=s then begin
          lblindex:=i;
          break;
       end;
@@ -244,7 +247,7 @@ begin
   result:=lblindex;
 end;
 
-procedure ResetSK();
+procedure Tskillform.ResetSK();
 var i,t:integer;
 begin
   for i:=0 to numskill do
@@ -258,7 +261,7 @@ begin
 
       end;
   while getlblindex('all')<>121 do
-        form2.Panel2.Controls[getlblindex('all')].Free;
+        SkillForm.Panel2.Controls[getlblindex('all')].Free;
 
 end;
 
@@ -288,7 +291,7 @@ end;
 
 function skillnome(ID:string):string;
 begin
-  with form2.skillQuery do begin
+  with SkillForm.skillQuery do begin
        sql.Clear;
        sql.Add('select name from skill where id='''+id[1]+id[2]+id[3]+id[4]+'''');
        open;
@@ -347,7 +350,7 @@ begin
 
               end;
           end;
-         form2.combobox4.items.clear;
+         SkillForm.combobox4.items.clear;
          for i:=0 to numskill do
            begin
              if (wscells[i].caption='') or (wscells[i].caption=freeslot) then
@@ -355,7 +358,7 @@ begin
                  j:=i+1;
                  if b=true then
                    begin
-                     form2.combobox4.Items.add(inttostr(j));
+                     SkillForm.combobox4.Items.add(inttostr(j));
                      b:=false;
                    end;
                  wscells[i].caption:=freeslot;
@@ -366,14 +369,14 @@ begin
                end
                  else
                    begin
-                     with form2 do
+                     with SkillForm do
                        begin
 
-                         form2.combobox4.Items.add(inttostr(i+1));
+                         SkillForm.combobox4.Items.add(inttostr(i+1));
                        end;
                    end;
            end;
-         form2.ComboBox4.ItemIndex:=0;
+         SkillForm.ComboBox4.ItemIndex:=0;
       except
       on E:exception do application.MessageBox(pchar(e.Message),Pchar(errorcaption),mb_ok+mb_iconerror);
 
@@ -382,7 +385,7 @@ begin
 end;
 
 
-procedure TForm2.ComboBox2Click(Sender: TObject);
+procedure TSkillForm.ComboBox2Click(Sender: TObject);
 var magicloads,magicload:string;
 i:byte;
 j:integer;
@@ -405,7 +408,7 @@ begin
     fillhexsk(muquery.Fields[0]);
 
     muquery.Close;
-  form2.combobox4.items.clear;
+  SkillForm.combobox4.items.clear;
          for i:=0 to numskill do
            begin
              if (wscells[i].caption='') or (wscells[i].caption=freeslot) then
@@ -413,7 +416,7 @@ begin
                  j:=i+1;
                  if b=true then
                    begin
-                     form2.combobox4.Items.add(inttostr(j));
+                     SkillForm.combobox4.Items.add(inttostr(j));
                      b:=false;
                    end;
                  wscells[i].caption:=freeslot;
@@ -424,14 +427,14 @@ begin
                end
                  else
                    begin
-                     with form2 do
+                     with SkillForm do
                        begin
 
-                         form2.combobox4.Items.add(inttostr(i+1));
+                         SkillForm.combobox4.Items.add(inttostr(i+1));
                        end;
                    end;
            end;
-         form2.ComboBox4.ItemIndex:=0;
+         SkillForm.ComboBox4.ItemIndex:=0;
  finally
  screen.Cursor:=0;
  editunlock;
@@ -440,7 +443,7 @@ end;
 
 
 
-procedure tform2.cellClick(sender:tobject);
+procedure tSkillForm.cellClick(sender:tobject);
 var sHint:string;
 i: byte  ;
 begin
@@ -471,7 +474,7 @@ begin
 
 end;
 
-procedure tform2.skilladd;
+procedure tSkillForm.skilladd;
 var
 i,j:byte;
 b:boolean;
@@ -535,7 +538,7 @@ begin
      end;
 end;
 
-procedure tform2.skillrem;
+procedure tSkillForm.skillrem;
 var
 i,j:byte;
 begin
@@ -567,7 +570,7 @@ begin
 
 end;
 
-procedure TForm2.BitBtn2Click(Sender: TObject);
+procedure TSkillForm.BitBtn2Click(Sender: TObject);
 begin
 skillrem;
 end;
@@ -584,22 +587,22 @@ begin
     begin
       ssqlsub:=ssqlsub+magiclist[i];;
     end;
-  ssql:=ssql+ssqlsub+' where '+nome+'='''+form2.combobox2.text+'''' ;
-  if form2.checkbox1.Checked then begin
+  ssql:=ssql+ssqlsub+' where '+nome+'='''+SkillForm.combobox2.text+'''' ;
+  if SkillForm.checkbox1.Checked then begin
     if application.MessageBox(pchar(ssql),'Query',mb_yesno+mb_iconinformation)=mrno then begin
        screen.Cursor:=0;
        result:=false;
        exit;
     end;
   end;
-  if form2.CheckBox2.Checked then begin
-     form2.richedit1.Lines.Clear;
-     form2.richedit1.Lines.Add(ssql);
-     form2.richedit1.SelectAll;
-     form2.richedit1.CopyToClipboard;
+  if SkillForm.CheckBox2.Checked then begin
+     SkillForm.richedit1.Lines.Clear;
+     SkillForm.richedit1.Lines.Add(ssql);
+     SkillForm.richedit1.SelectAll;
+     SkillForm.richedit1.CopyToClipboard;
   end;
   screen.Cursor:=0;
-  with form2.skillupdate do begin
+  with SkillForm.skillupdate do begin
   commandtext:=ssql;
   try
   execute;
@@ -616,7 +619,7 @@ end;
 
 
 
-procedure TForm2.BitBtn3Click(Sender: TObject);
+procedure TSkillForm.BitBtn3Click(Sender: TObject);
 var i:byte;
 sqladd:string;
 sqladdint:integer;
@@ -638,7 +641,7 @@ if skillcommit then application.MessageBox(Pchar(Confirm2),'CMT-VMAT SK Editor',
 end;
 
 
-procedure TForm2.BitBtn4Click(Sender: TObject);
+procedure TSkillForm.BitBtn4Click(Sender: TObject);
 var i,x:byte;
 magiclists: array[0..99] of string;
 begin
@@ -673,18 +676,18 @@ begin
   combobox4.itemindex:=0;
 end;
 
-procedure TForm2.BitBtn1Click(Sender: TObject);
+procedure TSkillForm.BitBtn1Click(Sender: TObject);
 begin
 skilladd;
 end;
 
-procedure TForm2.BitBtn6Click(Sender: TObject);
+procedure TSkillForm.BitBtn6Click(Sender: TObject);
 begin
   freesk;
   application.Terminate;
 end;
 
-procedure tform2.cellmove(Sender: TObject; Shift: TShiftState; X,
+procedure tSkillForm.cellmove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
 var sHint:string;
 i: byte  ;
@@ -695,7 +698,7 @@ end;
 
 
 
-procedure TForm2.ComboBox3Click(Sender: TObject);
+procedure TSkillForm.ComboBox3Click(Sender: TObject);
 begin
  with skillQuery do
    begin
@@ -707,9 +710,9 @@ begin
    end;
 end;
 
-procedure tform2.editlock;
+procedure tSkillForm.editlock;
 begin
-  with form2 do
+  with SkillForm do
     begin
       //groupbox3.enabled:=false;
     //  combobox3.Enabled:=false;
@@ -728,9 +731,9 @@ begin
     end;
 end;
 
-procedure tform2.editunlock;
+procedure tSkillForm.editunlock;
 begin
-  with form2 do
+  with SkillForm do
     begin
       //groupbox3.enabled:=true;
      // combobox3.Enabled:=true;
@@ -749,20 +752,28 @@ begin
     end;
 end;
 
-procedure TForm2.BitBtn5Click(Sender: TObject);
+procedure TSkillForm.BitBtn5Click(Sender: TObject);
 begin
-
-
- frmsd.ShowModal;
+tab:='skill';
+  frmsd.ShowModal;
 
 end;
 
-procedure TForm2.BitBtn8Click(Sender: TObject);
+procedure TSkillForm.BitBtn8Click(Sender: TObject);
 begin
+  tab:='SkillClass';
  frmsd.ShowModal;
 end;
 
-procedure TForm2.BitBtn7Click(Sender: TObject);
+procedure TSkillForm.BitBtn9Click(Sender: TObject);
+begin
+ cfgform.iniciar;
+ configtype:='using';
+ cfgform.Button4.Visible:=false;
+ cfgform.showmodal;
+end;
+
+procedure TSkillForm.BitBtn7Click(Sender: TObject);
 begin
 form3.Caption:=creditstext;
   form3.Label2.Caption:=OtherFiles;
@@ -770,52 +781,58 @@ form3.Caption:=creditstext;
   form3.showmodal;
 end;
 
-procedure TForm2.ComboBox1Change(Sender: TObject);
+procedure TSkillForm.ComboBox1Change(Sender: TObject);
 begin
 charactermostrar;
 end;
 
-procedure TForm2.ComboBox5Change(Sender: TObject);
+procedure TSkillForm.ComboBox5Change(Sender: TObject);
 var s:array[0..255] of string;
-i:byte;
+i,j:byte;
 g:byte;
+boo:boolean;
 begin
-form2.combobox3.items.clear;
+SkillForm.combobox3.items.clear;
   skillquery.SQL.clear;
-  skillquery.SQL.Add('select distinct NumClass from skillclass where class='''+combobox5.text+'''');
+  skillquery.SQL.Add('select NumClass from skillclass where class='''+combobox5.text+'''');
   skillquery.Open;
   for i:= 0 to skillquery.RecordCount-1 do
     begin
       s[i]:=(skillquery.Fields[0].asstring);
       skillquery.Next;
-      g:=i;
+
     end;
+     g:=skillquery.RecordCount-1;
   skillquery.Close;
   for i:=0 to g do
     begin
       skillquery.SQL.clear;
-      skillquery.SQL.Add('select name from skill where class='''+s[g]+'''');
+      skillquery.SQL.Add('select name from skill where class='''+s[i]+'''');
       skillquery.Open;
       while not skillquery.Eof do
         begin
-          combobox3.items.add(skillquery.Fields[0].asstring);
+          boo:=false;
+          for j:= 0 to combobox3.Items.Count-1 do
+            if combobox3.Items[j]=skillquery.Fields[0].asstring then boo:=true;
+          if boo=false then
+            combobox3.items.add(skillquery.Fields[0].asstring);
           skillquery.Next
         end;
       skillquery.Close;
     end;
-  form2.combobox3.ItemIndex:=1;
+  SkillForm.combobox3.ItemIndex:=1;
 
   with skillQuery do
     begin
       sql.Clear;
-      sql.Add('select ID from Skill where Name='''+form2.combobox3.text+'''');
+      sql.Add('select ID from Skill where Name='''+SkillForm.combobox3.text+'''');
       open;
-      form2.label6.caption :='Serial: '+fields[0].AsString+'00';
+      SkillForm.label6.caption :='Serial: '+fields[0].AsString+'00';
       close;
     end;
 end;
 
-procedure Tform2.iniciar;
+procedure TSkillForm.iniciar;
 var
   i:byte;
   filename : string;
@@ -824,84 +841,169 @@ var
   esc: boolean;
   numero:integer;
   s:array[1..12] of string;
-  g:string;
+ g,caption,cap2:string;
 begin
+
+  caption:='mnoqPUtsqzFGHqIqwXRq9jl0';
+  cap2:='';
+  for I := 0 to length(caption) do
+    begin
+      if caption[i]='m' then cap2:=cap2+'C';
+      if caption[i]='n' then cap2:=cap2+'M';
+      if caption[i]='o' then cap2:=cap2+'T';
+      if caption[i]='P' then cap2:=cap2+'S';
+      if caption[i]='q' then cap2:=cap2+' ';
+      if caption[i]='R' then cap2:=cap2+'on';
+      if caption[i]='s' then cap2:=cap2+'ll';
+      if caption[i]='t' then cap2:=cap2+'i';
+      if caption[i]='U' then cap2:=cap2+'k';
+      if caption[i]='V' then cap2:=cap2+'d';
+      if caption[i]='X' then cap2:=cap2+'ne';
+      if caption[i]='z' then cap2:=cap2+'Ed';
+      if caption[i]='F' then cap2:=cap2+'i';
+      if caption[i]='G' then cap2:=cap2+'t';
+      if caption[i]='H' then cap2:=cap2+'or';
+      if caption[i]='I' then cap2:=cap2+'by';
+      if caption[i]='j' then cap2:=cap2+'1.';
+      if caption[i]='l' then cap2:=cap2+'1';
+      if caption[i]='w' then cap2:=cap2+'un';
+      if caption[i]='9' then cap2:=cap2+'[';
+      if caption[i]='0' then cap2:=cap2+']';
+    end;
+  skillform.Caption:=cap2;
+  caption:='UIOPQWESFAVQCGHLQMQY|\Q$NOV';
+  cap2:='';
+  for I := 0 to length(caption) do
+    begin
+      if caption[i]='U' then cap2:=cap2+'C';
+      if caption[i]='I' then cap2:=cap2+'M';
+      if caption[i]='O' then cap2:=cap2+'';
+      if caption[i]='P' then cap2:=cap2+'T';
+      if caption[i]='Q' then cap2:=cap2+' ';
+      if caption[i]='W' then cap2:=cap2+'';
+      if caption[i]='E' then cap2:=cap2+'S';
+      if caption[i]='S' then cap2:=cap2+'ki';
+      if caption[i]='F' then cap2:=cap2+'l';
+      if caption[i]='A' then cap2:=cap2+'l';
+      if caption[i]='V' then cap2:=cap2+'';
+      if caption[i]='C' then cap2:=cap2+'Ed';
+      if caption[i]='G' then cap2:=cap2+'i';
+      if caption[i]='H' then cap2:=cap2+'t';
+      if caption[i]='L' then cap2:=cap2+'or';
+      if caption[i]='M' then cap2:=cap2+'by';
+      if caption[i]='N' then cap2:=cap2+'';
+      if caption[i]='O' then cap2:=cap2+'';
+      if caption[i]='Y' then cap2:=cap2+'un';
+      if caption[i]='$' then cap2:=cap2+'';
+      if caption[i]='V' then cap2:=cap2+'';
+      if caption[i]='|' then cap2:=cap2+'ne';
+      if caption[i]='\' then cap2:=cap2+'on';
+    end;
+  statusbar1.Panels[0].Text:=cap2;
+  caption:='=-0987654321';
+  cap2:='';
+  for I := 0 to length(caption) do
+    begin
+      if caption[i]='=' then cap2:=cap2+'P';
+      if caption[i]='-' then cap2:=cap2+'r';
+      if caption[i]='0' then cap2:=cap2+'og';
+      if caption[i]='9' then cap2:=cap2+'ra';
+      if caption[i]='8' then cap2:=cap2+'m';
+      if caption[i]='7' then cap2:=cap2+' ';
+      if caption[i]='6' then cap2:=cap2+'by ';
+      if caption[i]='5' then cap2:=cap2+'U';
+      if caption[i]='4' then cap2:=cap2+'n';
+      if caption[i]='3' then cap2:=cap2+'e';
+      if caption[i]='2' then cap2:=cap2+'on';
+    end;
+  form3.label3.caption:=cap2;
+  caption:='CltETXorXFzund';
+  cap2:='';
+  for I := 0 to length(caption) do
+    begin
+      if caption[i]='C' then cap2:=cap2+'L';
+      if caption[i]='l' then cap2:=cap2+'oa';
+      if caption[i]='t' then cap2:=cap2+'d';
+      if caption[i]='E' then cap2:=cap2+'i';
+      if caption[i]='T' then cap2:=cap2+'ng';
+      if caption[i]='X' then cap2:=cap2+' ';
+      if caption[i]='o' then cap2:=cap2+'b';
+      if caption[i]='r' then cap2:=cap2+'y';
+      if caption[i]='F' then cap2:=cap2+'S';
+      if caption[i]='z' then cap2:=cap2+'tr';
+      if caption[i]='u' then cap2:=cap2+'i';
+      if caption[i]='n' then cap2:=cap2+'k';
+      if caption[i]='d' then cap2:=cap2+'er';
+    end;
+  form3.label5.caption:=cap2;
+  caption:='QergomybHIç\';
+  cap2:='';
+  for I := 0 to length(caption) do
+    begin
+      if caption[i]='Q' then cap2:=cap2+'S';
+      if caption[i]='e' then cap2:=cap2+'k';
+      if caption[i]='r' then cap2:=cap2+'i';
+      if caption[i]='g' then cap2:=cap2+'l';
+      if caption[i]='o' then cap2:=cap2+'';
+      if caption[i]='m' then cap2:=cap2+'l';
+      if caption[i]='y' then cap2:=cap2+' ';
+      if caption[i]='b' then cap2:=cap2+'E';
+      if caption[i]='H' then cap2:=cap2+'d';
+      if caption[i]='I' then cap2:=cap2+'it';
+      if caption[i]='ç' then cap2:=cap2+'o';
+      if caption[i]='\' then cap2:=cap2+'r';
+    end;
+  form3.label1.caption:=cap2;
+  programname:=cap2;
   tabela:='skill';
   muquery.ConnectionString:='Provider=MSDASQL.1;Password='+mupwd+';Persist Security Info=True;User ID='+muid+';Data Source='+mudsn+';Initial Catalog='+catalog;
   skillquery.ConnectionString:='Provider=Microsoft.Jet.OLEDB.4.0;Data Source='+ExtractFilePath(Application.ExeName)+'skill.mdb'+';Mode=ReadWrite;Persist Security Info=False';
   skillupdate.connectionstring:=muquery.connectionstring;
   accquery.connectionstring:='Provider=MSDASQL.1;Password='+memupwd+';Persist Security Info=True;User ID='+memuid+';Data Source='+memudsn+';Initial Catalog='+mecatalog;
 
-  filename:=ExtractFilePath(Application.ExeName)+'SQLNames.txt';
-  assignfile(F,filename);
-  reset(F);
-  i:=0;
-  while not eof(F) do
-    begin
-      read(F,ch);
-      Case ch of
-        '"'  :  begin
-                  if esc=false then esc:=true
-                    else
-                      begin
-                        esc:=false;
-                        inc(i);
-                        s[i]:=g;
-                        g:='';
-                      end;
-                end;
-         else begin
-                if esc=true then
-                  begin
-                    g:=g+ch;
-                  end;
-               end;
-      end;
-    end;
-  closefile(F);
-  //Memb___id
-  memb_info:=s[1];
-  memb___id:=s[2];
-  //Accountcharacter
-  GameID1:=s[3];
-  GameID2:=s[4];
-  GameID3:=s[5];
-  GameID4:=s[6];
-  GameID5:=s[7];
-  ID:=s[8];
-  AccountCharacter:=s[9];
-  //Character
-  Character:=s[10];
-  MagicLists:=s[11];
-  nome:=s[12];
+
   muquery.sql.clear;
   muquery.SQL.Add('select '+magiclists+' from '+character+'');
   muquery.open;
   numero:=(muquery.Fields[0].Size);
   muquery.Close;
   numskill:=numero*2 div 6-1;
+  skillform.Caption:=skillform.Caption+' ('+inttostr(numskill+1)+Skillstext+')';
  // label1.caption:=inttostr(numskill);
  // label1.caption:=inttostr(numskill);
   editlock;
   initsk;
   accountmostrar;
   skillquery.SQL.clear;
+  skillquery.SQL.Add('select distinct class from SkillClass');
+  skillquery.Open;
+  SkillForm.combobox5.items.clear;
+  for i:= 0 to skillquery.RecordCount-1 do
+    begin
+      if skillquery.Fields[0].asstring<>'XX' then
+        SkillForm.combobox5.Items.Add(skillquery.Fields[0].asstring);
+      skillquery.Next;
+    end;
+  combobox5.itemindex:=1;
+  combobox5.OnChange(combobox5);
+  {
+  skillquery.SQL.clear;
   skillquery.Close;
   skillquery.SQL.Add('select name from Skill where Class<>''XXXX''');
   skillquery.Open;
-  form2.combobox3.items.clear;
+  SkillForm.combobox3.items.clear;
   while not skillquery.eof do
     begin
-      form2.combobox3.Items.Add(skillquery.Fields[0].asstring);
+      SkillForm.combobox3.Items.Add(skillquery.Fields[0].asstring);
       skillquery.Next;
     end;
-
+   }
  { skillquery.SQL.Add('select distinct class from SkillClass where class<>''XX''');
   skillquery.Open;
-  form2.combobox5.items.clear;
+  SkillForm.combobox5.items.clear;
   while not skillquery.eof do
     begin
-      form2.combobox5.Items.Add(skillquery.Fields[0].asstring);
+      SkillForm.combobox5.Items.Add(skillquery.Fields[0].asstring);
       skillquery.Next;
     end;           }
   skillquery.Close;
@@ -912,6 +1014,7 @@ begin
   label3.caption:=skilltext;
   label4.Caption:=SkillPos;
   label6.Caption:=SkillSerial;
+  label7.Caption:=typetext;
   groupbox1.Caption:=skillstext;
   bitbtn1.Caption:=addskill;
   bitbtn2.caption:=remskill;
@@ -924,8 +1027,10 @@ begin
   bitbtn4.caption:=skillclear;
   bitbtn6.caption:=closetext;
   bitbtn7.caption:=creditstext;
+  bitbtn8.caption:=classe;
+  bitbtn9.caption:=editcmtedit;
   //lang end
-  form2.update;
+  SkillForm.update;
 end;
 
 

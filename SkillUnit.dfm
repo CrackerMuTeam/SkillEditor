@@ -1,9 +1,10 @@
-object Form2: TForm2
-  Left = 146
-  Top = 192
-  BorderStyle = bsToolWindow
-  Caption = 'CMT-VMAT SK Editor 1.0c'
-  ClientHeight = 247
+object SkillForm: TSkillForm
+  Left = 127
+  Top = 180
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'CMT Skill Editor by Unneon [1.1]'
+  ClientHeight = 238
   ClientWidth = 728
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,7 +13,6 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesigned
   OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
@@ -23,15 +23,15 @@ object Form2: TForm2
     Height = 22
   end
   object Label5: TLabel
-    Left = 568
-    Top = 200
+    Left = 567
+    Top = 196
     Width = 72
     Height = 13
     Caption = 'Codigo do Skill:'
   end
   object GroupBox1: TGroupBox
-    Left = 9
-    Top = 112
+    Left = 8
+    Top = 105
     Width = 553
     Height = 105
     Caption = 'Skills'
@@ -67,7 +67,7 @@ object Form2: TForm2
   end
   object GroupBox2: TGroupBox
     Left = 8
-    Top = 8
+    Top = 4
     Width = 209
     Height = 97
     Caption = 'Selecionar Account'
@@ -122,44 +122,43 @@ object Form2: TForm2
     end
   end
   object GroupBox3: TGroupBox
-    Left = 224
-    Top = 8
+    Left = 223
+    Top = 4
     Width = 337
     Height = 97
     TabOrder = 2
     object Label3: TLabel
-      Left = 4
-      Top = 10
+      Left = 8
+      Top = 51
       Width = 21
       Height = 13
       Caption = 'Skill:'
     end
     object Label4: TLabel
-      Left = 4
-      Top = 66
+      Left = 174
+      Top = 70
       Width = 21
       Height = 13
       Caption = 'Pos:'
     end
     object Label6: TLabel
-      Left = 96
-      Top = 66
-      Width = 30
+      Left = 256
+      Top = 70
+      Width = 69
       Height = 13
-      Caption = 'Serial:'
+      Caption = 'Serial: 000000'
     end
     object Label7: TLabel
-      Left = 48
-      Top = 10
+      Left = 8
+      Top = 11
       Width = 24
       Height = 13
       Caption = 'Tipo:'
-      Visible = False
     end
     object ComboBox4: TComboBox
-      Left = 32
-      Top = 64
-      Width = 49
+      Left = 200
+      Top = 67
+      Width = 48
       Height = 21
       Style = csDropDownList
       DropDownCount = 20
@@ -190,18 +189,18 @@ object Form2: TForm2
         '20')
     end
     object BitBtn1: TBitBtn
-      Left = 192
-      Top = 22
-      Width = 137
+      Left = 174
+      Top = 10
+      Width = 155
       Height = 25
       Caption = 'Add Skill'
       TabOrder = 1
       OnClick = BitBtn1Click
     end
     object BitBtn2: TBitBtn
-      Left = 192
-      Top = 54
-      Width = 137
+      Left = 174
+      Top = 38
+      Width = 155
       Height = 25
       Caption = 'Remover Skill'
       TabOrder = 2
@@ -209,8 +208,8 @@ object Form2: TForm2
     end
     object ComboBox3: TComboBox
       Left = 8
-      Top = 28
-      Width = 153
+      Top = 67
+      Width = 160
       Height = 21
       AutoComplete = False
       Style = csDropDownList
@@ -225,9 +224,9 @@ object Form2: TForm2
       OnClick = ComboBox3Click
     end
     object ComboBox5: TComboBox
-      Left = 33
-      Top = 29
-      Width = 153
+      Left = 8
+      Top = 26
+      Width = 161
       Height = 21
       AutoComplete = False
       Style = csDropDownList
@@ -239,13 +238,12 @@ object Form2: TForm2
       ItemHeight = 13
       ParentFont = False
       TabOrder = 4
-      Visible = False
       OnChange = ComboBox5Change
     end
   end
   object GroupBox4: TGroupBox
     Left = 568
-    Top = 8
+    Top = 4
     Width = 153
     Height = 145
     TabOrder = 3
@@ -253,32 +251,32 @@ object Form2: TForm2
       Left = 8
       Top = 16
       Width = 137
-      Height = 25
+      Height = 20
       Caption = 'Editar MagicList'
       TabOrder = 0
       OnClick = BitBtn3Click
     end
     object BitBtn4: TBitBtn
       Left = 8
-      Top = 48
+      Top = 40
       Width = 137
-      Height = 25
+      Height = 20
       Caption = 'Resetar MagicList'
       TabOrder = 1
       OnClick = BitBtn4Click
     end
     object BitBtn6: TBitBtn
       Left = 8
-      Top = 80
+      Top = 64
       Width = 137
-      Height = 25
+      Height = 20
       Caption = 'Fechar Skill Editor'
       TabOrder = 2
       OnClick = BitBtn6Click
     end
     object CheckBox1: TCheckBox
       Left = 8
-      Top = 107
+      Top = 108
       Width = 137
       Height = 17
       Caption = 'Mostrar Query'
@@ -294,10 +292,19 @@ object Form2: TForm2
       TabOrder = 4
       WordWrap = True
     end
+    object BitBtn9: TBitBtn
+      Left = 8
+      Top = 88
+      Width = 137
+      Height = 20
+      Caption = 'Fechar Skill Editor'
+      TabOrder = 5
+      OnClick = BitBtn9Click
+    end
   end
   object Edit1: TEdit
-    Left = 648
-    Top = 196
+    Left = 647
+    Top = 192
     Width = 73
     Height = 21
     Font.Charset = GB2312_CHARSET
@@ -312,12 +319,12 @@ object Form2: TForm2
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 223
+    Top = 214
     Width = 728
     Height = 24
     Panels = <
       item
-        Text = 'CMT-VMAT SK Editor by Unneon'
+        Text = 'CMT SKill Editor by Unneon'
         Width = 645
       end
       item
@@ -325,8 +332,8 @@ object Form2: TForm2
       end>
   end
   object BitBtn7: TBitBtn
-    Left = 650
-    Top = 228
+    Left = 651
+    Top = 219
     Width = 75
     Height = 17
     Caption = 'Creditos'
@@ -335,25 +342,24 @@ object Form2: TForm2
   end
   object GroupBox5: TGroupBox
     Left = 568
-    Top = 152
+    Top = 149
     Width = 153
     Height = 41
     Caption = 'Editar Skill.mdb'
     TabOrder = 7
     object BitBtn8: TBitBtn
       Left = 80
-      Top = 7
+      Top = 15
       Width = 65
       Height = 20
       Caption = 'Class'
       TabOrder = 0
-      Visible = False
       OnClick = BitBtn8Click
     end
     object BitBtn5: TBitBtn
       Left = 8
       Top = 15
-      Width = 137
+      Width = 66
       Height = 20
       Caption = 'Skills'
       TabOrder = 1

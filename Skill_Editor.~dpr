@@ -22,7 +22,7 @@ begin
   muflash.iniciar;
     Application.CreateForm(TSkillForm, SkillForm);
   Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TfrmSD, frmSD);
+//  Application.CreateForm(TfrmSD, frmSD);
 
   Application.Run;
 

@@ -1,17 +1,55 @@
+//Guild
+"G_name"		//G_name (guild)
+"G_mark"		//G_Mark
+"G_Master"		//G_Master
+"G_Count"		//G_Count
+"G_notice"		//G_notice
+"Guild"			//Guild
+
+//AccountCharacter
+"GameID1"		//GameID1
+"GameID2"		//GameID2
+"GameID3"		//GameID3
+"GameID4"		//GameID4
+"GameID5"		//GameID5
+"AccountCharacter"	//AccountCharacter
+
+//guildmember
+"ID"			//ID
+"Name"			//Name
+"G_Level"		//G_Level
+"GuildMember"		//GuildMember
+"G_Score"		//G_Score
+"G_name"		//G_name(guildmember)
+"G_Status"              //G_Status
+"G_Level"               //G_Level(guildmember)
+
 //Tabela Memb___id
 "MEMB_INFO"          //MEMB_INFO
 "memb___id"          //memb___id    
 
-//Tabela AccountCharacter
-"GameID1"            //GameID1
-"GameID2"            //GameID2  
-"GameID3"            //GameID3 
-"GameID4"            //GameID4 
-"GameID5"            //GameID5 
-"Id"                 //ID 
-"AccountCharacter"   //AccountCharacter 
-
 //Tabela Character
 "Character"          //Character 
-"MagicList"          //MagicList
+"Inventory"          //Inventory
 "Name"               //GameID2 
+"Inventory"           //PS
+
+//Tabela GameServerInfo
+"GameServerInfo"
+"ItemCount"
+
+//warehouse
+"AccountID"   //AccountID
+"Money"       //Money
+"warehouse"   //Warehouse
+"Items"       //Items
+
+//Tabela Memb___id
+"MEMB_INFO"		//MEMB_INFO
+"memb___id"		//memb___id    
+"Vip"			///VIP
+"Creditos"		//creditos
+"Moedas"		//moedas
+
+//Character parte2
+"MagicList"          //MagicList

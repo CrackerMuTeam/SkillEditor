@@ -1,6 +1,6 @@
 object MUFlash: TMUFlash
-  Left = 288
-  Top = 262
+  Left = 276
+  Top = 224
   BorderStyle = bsNone
   Caption = 'MUFlash'
   ClientHeight = 283
