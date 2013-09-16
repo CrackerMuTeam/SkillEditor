@@ -1,0 +1,56 @@
+Como configurar o editor:
+
+
+=ODBC=
+
+
+-Para quem usa 1 ou 2 dbs:
+abra o arquivo DSN.INI
+coloque: 
+
+[MuOnline]
+DSN=Seu ODBC Muonline(Geralmente eh MuOnline)
+User=Seu user do SQL(Geralmente eh sa)
+Password=Sua senha do SQL
+InitCatalog=O nome da sua db muonline(Geralmente eh MuOnline ou Muonline)
+[MeMuOnline]
+DSN=Seu ODBC Muonline(Geralmente eh MuOnline)
+User=Seu user do SQL(Geralmente eh sa)
+Password=Sua senha do SQL
+InitCatalog=O nome da sua db muonline(Geralmente eh MuOnline ou Muonline)
+
+Para quem usa 1 ou 2 dbs o MeMuonline eh = o MuOnline
+
+----
+
+
+-Para quem usa 5 ou 6 dbs:
+abra o arquivo DSN.INI
+coloque
+
+[MuOnline]
+DSN=Seu ODBC Muonline(Geralmente eh MuOnline)
+User=Seu user do SQL(Geralmente eh sa)
+Password=Sua senha do SQL
+InitCatalog=O nome da sua db muonline(Geralmente eh MuOnline ou Muonline)
+[MeMuOnline]
+DSN=Seu ODBC Me_Muonline(Geralmente eh MuOnlineJoinDB)
+User=Seu user do SQL(Geralmente eh sa)
+Password=Sua senha do SQL
+InitCatalog=O nome da sua db Me_muonline(Geralmente eh Me_MuOnline ou Me_Muonline)
+
+
+----------
+Pronto agora voce ja pode abrir o programa...
+Se der erro em algum campo no sql feche o programa 
+e abra o arquivo SQLNames.txt
+edite de acordo com o seu sql 
+ATENÇÃO: Naum mude a ordem dos nomes,
+pode ter qualquer coisa entre eles ,
+tanto q naum tenha " e q a ordem naum se altere
+
+Se o erro for de naum conseguir se conectar,
+o problema eh no ODBC refaça a etapa do obdc
+
+
+Naum eh nd confirmado,mas futuramente tentarei por automatico
